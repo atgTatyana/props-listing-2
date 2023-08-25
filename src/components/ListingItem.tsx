@@ -8,7 +8,7 @@ export const ListingItem = ({ item }: ListingItemProps) => {
   const { currency_code } = item;
 
   let { title, price } = item;
-  if (title.length > 50) {
+  if (title && title.length > 50) {
     title = title.slice(0, 50) + "...";
   }
 
@@ -17,7 +17,7 @@ export const ListingItem = ({ item }: ListingItemProps) => {
   } else if (currency_code === "EUR") {
     price = "€" + price;
   } else {
-    price = price + currency_code;
+    price = price && currency_code && price + currency_code;
   }
   
   return (
@@ -31,8 +31,9 @@ export const ListingItem = ({ item }: ListingItemProps) => {
         <div className="item-details">
           <p className="item-title">{title}</p>
           <p className="item-price">{price}</p>
-          <p className={item.quantity < 11 ? "item-quantity level-low" 
-            : item.quantity < 21 ? "item-quantity level-medium" : "item-quantity level-high"}>
+          <p className={item.quantity && item.quantity < 11 ? "item-quantity level-low" 
+            : item.quantity && item.quantity < 21 ? "item-quantity level-medium"
+            : "item-quantity level-high"}>
             {item.quantity} left
           </p>
         </div>
